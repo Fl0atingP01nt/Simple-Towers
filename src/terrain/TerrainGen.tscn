@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://3t7yq30mwnv2"]
+
+[ext_resource type="Script" uid="uid://dhncm5f7cyx7f" path="res://src/terrain/TerrainGen.gd" id="1_d8agx"]
+
+[node name="Terrain" type="GridMap"]
+cell_size = Vector3(1, 1, 1)
+cell_center_y = false
+script = ExtResource("1_d8agx")
