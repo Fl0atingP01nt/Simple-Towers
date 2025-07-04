@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://cf7brgwaxlmud" path="res://addons/3d_rts_camera/rtscam.tscn" id="1_c6gwx"]
 [ext_resource type="PackedScene" uid="uid://3t7yq30mwnv2" path="res://src/terrain/TerrainGen.tscn" id="2_2dftf"]
-[ext_resource type="MeshLibrary" uid="uid://dqiwpokui8xrc" path="res://assets/debug/debug_mesh_library.tres" id="3_bcbcq"]
+[ext_resource type="MeshLibrary" uid="uid://f2tox1nwn2fx" path="res://assets/terrain/terrain.tres" id="3_bcbcq"]
 
 [node name="World" type="Node3D"]
 
@@ -13,10 +13,11 @@ shadow_enabled = true
 [node name="RTScamera" parent="." instance=ExtResource("1_c6gwx")]
 transform = Transform3D(1, 0, 0, 0, 0.759896, 0.650045, 0, -0.650045, 0.759896, 0, 6.73361, 11.4129)
 
-[node name="Terrain" parent="." instance=ExtResource("2_2dftf")]
-transform = Transform3D(1.25, 0, 0, 0, 1.25, 0, 0, 0, 1.25, 0, 0, 0)
+[node name="Generation" parent="." instance=ExtResource("2_2dftf")]
 mesh_library = ExtResource("3_bcbcq")
-data = {
-"cells": PackedInt32Array(65535, 65535, 0, 65535, 0, 0, 0, 0, 0, 0, 65535, 0)
-}
-freqency = 0.01
+x_radius = 32
+z_radius = 32
+freqency = 0.2
+threshold = 0.3
+fill = true
+fill_block_id = 1
