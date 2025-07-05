@@ -1,5 +1,5 @@
 # Simple Towers
-A simple 3D tower defense game made in Godot. Everything here is made by me and I'm using this to practice making 3D games.
+A simple 3D tower defense game made in Godot.
 
 ### Things I've Done So Far:
 	- Terrain Gen (unfinished)

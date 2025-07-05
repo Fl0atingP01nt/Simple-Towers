@@ -11,7 +11,7 @@ transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75
 shadow_enabled = true
 
 [node name="RTScamera" parent="." instance=ExtResource("1_c6gwx")]
-transform = Transform3D(1, 0, 0, 0, 0.759896, 0.650045, 0, -0.650045, 0.759896, 0, 6.73361, 11.4129)
+transform = Transform3D(1, 0, 0, 0, 0.642788, 0.766045, 0, -0.766045, 0.642788, 0, 6.73361, 11.4129)
 
 [node name="Generation" parent="." instance=ExtResource("2_2dftf")]
 mesh_library = ExtResource("3_bcbcq")
@@ -21,3 +21,5 @@ freqency = 0.2
 threshold = 0.3
 fill = true
 fill_block_id = 1
+path = true
+path_length = 16

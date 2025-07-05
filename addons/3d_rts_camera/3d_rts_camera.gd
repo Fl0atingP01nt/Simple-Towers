@@ -38,13 +38,13 @@ func _process(delta):
 	var movement = Vector3.ZERO
 	
 	# capture movement keys
-	if Input.is_action_pressed("ui_right"):
+	if Input.is_action_pressed("cam_right"):
 		movement.x += 1
-	if Input.is_action_pressed("ui_left"):
+	if Input.is_action_pressed("cam_left"):
 		movement.x -= 1
-	if Input.is_action_pressed("ui_up"):
+	if Input.is_action_pressed("cam_forward"):
 		movement.z -= 1
-	if Input.is_action_pressed("ui_down"):
+	if Input.is_action_pressed("cam_backward"):
 		movement.z += 1
 	
 	# Edge scrolling
