@@ -22,11 +22,13 @@ class_name TerrainGen
 @export var path_block:TerrainBlockType = TerrainBlockType.PATH;
 @export var spawn_point:TerrainBlockType = TerrainBlockType.SPAWN;
 @export var end_point:TerrainBlockType = TerrainBlockType.END;
-@export var path_length:int = 640;
+@export var padding:int = 5;
+@export var path_width:int = 30;
 
 var _debug_mesh_lib:MeshLibrary = load("res://assets/debug/debug_mesh_library.tres");
 
-var terrain_noise:FastNoiseLite = FastNoiseLite.new();
+var _terrain_noise:FastNoiseLite = FastNoiseLite.new();
+var _point:Vector3i = Vector3i(0, y_radius - 1, (z_radius * 2) - padding);
 
 enum TerrainBlockType{ 
 	STONE,
@@ -48,47 +50,63 @@ func fill_blocks(length:int, height:int, width:int, block_id:int) -> void: #I ho
 			for z in range(-width, width):
 				set_cell_item(Vector3i(x, y, z), block_id);
 
-func _generate_path() -> void:
-	var point:Vector3i = Vector3i(-x_radius + 5, y_radius - 1, -z_radius + 5);
-	var dir:Array = [0,1,2,3]; #left/up/right/down
-	var dist:int;
-	var cur_len:int; #current length
+func _generate_path(point:Vector3i, path:TerrainBlockType, start:TerrainBlockType, end:TerrainBlockType) -> void:
+	var cur_len:int;
+	var max_len:int = (z_radius * 2) - (padding * 2);
 	
-	var prev_point:Vector3i; #previous point
-	var cur_dir:int = dir.pick_random(); #current direction
+	var dir:Array = [0, 1, 2]; #1 = left; 2 = right; 0 = go down;
 	
-	set_cell_item(point, TerrainBlockType.SPAWN);
-	while cur_len < path_length:
-		for x in range(point.x - 1, point.x + 1):
-			for z in range(point.z - 1, point.z + 1):
-				cur_dir = dir.pick_random();
-				if prev_point != point:
-					prev_point = point;
-					match cur_dir:
-						0: point.z -= 1
-						1: point.x += 1
-						2: point.z += 1
-						3: point.x -= 1
-					if point.x in range(-x_radius + 5, x_radius - 5) and point.z in range(-z_radius + 5, z_radius - 5):
-						set_cell_item(point, path_block);
-						print(cur_dir, ' ', prev_point, ' ', point);
-						cur_len += 1;
+	var cur_dir:int;
+	var prev_dir:int;
+	var turn_dist:int;
+	
+	var l_padding:int = -path_width/2;
+	var r_padding:int = path_width/2;
+	
+	set_cell_item(point, start);
+	while cur_len <= max_len:
+		var h_len:int = randi_range(1, 5);
+		cur_dir = dir.pick_random();
+		#print(prev_dir, ' ', cur_dir);
+		if prev_dir != cur_dir:
+			print('hi');
+		if cur_dir and prev_dir == cur_dir:
+			match cur_dir:
+				1: 
+					for h in range(h_len):
+						if point.x > l_padding:
+							point.x -= 1;
+							set_cell_item(point, path);
+				2: 
+					for h in range(h_len):
+						if point.x < r_padding:
+							point.x += 1;
+							set_cell_item(point, path);
+		else: 
+			for h in range(h_len):
+				point.z -= 1;
+				cur_len += 1;
+				set_cell_item(point, path);
+				if cur_len > max_len:
+					break;
+		prev_dir = cur_dir
+	set_cell_item(point, end);
 
 func generate(length:int, height:int, width:int, block_id:int, threshold:float, new_seed:int, fill:bool = false, fill_block_id:int = -1) -> void:
-	terrain_noise.seed = new_seed;
+	_terrain_noise.seed = new_seed;
 	for x in range(-length, length):
 		for y in range(-height, height):
 			for z in range(-width, width):
-				if terrain_noise.get_noise_2d(x, z) > threshold:
+				if _terrain_noise.get_noise_2d(x, z) > threshold:
 					set_cell_item(Vector3i(x,y,z), block_id);
-				else: if fill: set_cell_item(Vector3i(x,y,z), fill_block_id); #funny nesting
+				elif fill: set_cell_item(Vector3i(x,y,z), fill_block_id); #funny nesting
 	if path:
-		_generate_path();
+		_generate_path(_point, path_block, spawn_point, end_point);
 
 func _ready() -> void:
-	terrain_noise.noise_type = noise_type;
-	terrain_noise.frequency = freqency;
-	terrain_noise.seed = init_seed;
+	_terrain_noise.noise_type = noise_type;
+	_terrain_noise.frequency = freqency;
+	_terrain_noise.seed = init_seed;
 	
 	if mesh_library == null:
 		mesh_library = _debug_mesh_lib;

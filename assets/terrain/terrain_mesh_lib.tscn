@@ -1,0 +1,24 @@
+[gd_scene load_steps=6 format=3 uid="uid://djgspan4m4gpc"]
+
+[ext_resource type="PackedScene" uid="uid://i8dsw1n5oacp" path="res://assets/terrain/path_block.glb" id="1_nb5xw"]
+[ext_resource type="PackedScene" uid="uid://fsbwg6p2t8a" path="res://assets/terrain/spawn.glb" id="2_nwhdu"]
+[ext_resource type="PackedScene" uid="uid://bb2fxx86s1xbr" path="res://assets/terrain/end.glb" id="3_gxwhv"]
+[ext_resource type="PackedScene" uid="uid://cbotuv4p2w238" path="res://assets/terrain/grass_block.glb" id="4_x3ifm"]
+[ext_resource type="PackedScene" uid="uid://bvkmx8x88tmo1" path="res://assets/terrain/stone_block.glb" id="5_m000t"]
+
+[node name="Node3D" type="Node3D"]
+
+[node name="blockbench_export" parent="." instance=ExtResource("1_nb5xw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, 0.5)
+
+[node name="blockbench_export2" parent="." instance=ExtResource("2_nwhdu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, 1.5)
+
+[node name="blockbench_export3" parent="." instance=ExtResource("3_gxwhv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, 2.5)
+
+[node name="blockbench_export4" parent="." instance=ExtResource("4_x3ifm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0, 0.5)
+
+[node name="blockbench_export5" parent="." instance=ExtResource("5_m000t")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0, 1.5)
