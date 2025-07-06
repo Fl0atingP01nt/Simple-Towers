@@ -29,6 +29,8 @@ var _debug_mesh_lib:MeshLibrary = load("res://assets/debug/debug_mesh_library.tr
 
 var _terrain_noise:FastNoiseLite = FastNoiseLite.new();
 var _point:Vector3i = Vector3i(0, y_radius - 1, (z_radius * 2) - padding);
+var _start_location:Vector3i;
+var _end_location:Vector3i;
 
 enum TerrainBlockType{ 
 	STONE,
@@ -50,6 +52,14 @@ func fill_blocks(length:int, height:int, width:int, block_id:int) -> void: #I ho
 			for z in range(-width, width):
 				set_cell_item(Vector3i(x, y, z), block_id);
 
+func get_path_end() -> Vector3:
+	var pos = map_to_local(_end_location)
+	return pos;
+
+func get_path_start() -> Vector3:
+	var pos = map_to_local(_start_location);
+	return pos;
+
 func _generate_path(point:Vector3i, path:TerrainBlockType, start:TerrainBlockType, end:TerrainBlockType) -> void:
 	var cur_len:int;
 	var max_len:int = (z_radius * 2) - (padding * 2);
@@ -64,13 +74,12 @@ func _generate_path(point:Vector3i, path:TerrainBlockType, start:TerrainBlockTyp
 	var r_padding:int = path_width/2;
 	
 	set_cell_item(point, start);
+	_start_location = point;
 	while cur_len <= max_len:
-		var h_len:int = randi_range(1, 5);
+		var h_len:int = randi_range(2, 3);
 		cur_dir = dir.pick_random();
-		#print(prev_dir, ' ', cur_dir);
-		if prev_dir != cur_dir:
-			print('hi');
-		if cur_dir and prev_dir == cur_dir:
+		#print(prev_dir, ' ', cur_dir); for debug only DO NOT UNCOMMENT AGAIN
+		if cur_dir and prev_dir == cur_dir: #I wonder how I wonder why but if it works it works (.-.)
 			match cur_dir:
 				1: 
 					for h in range(h_len):
@@ -91,6 +100,7 @@ func _generate_path(point:Vector3i, path:TerrainBlockType, start:TerrainBlockTyp
 					break;
 		prev_dir = cur_dir
 	set_cell_item(point, end);
+	_end_location = point;
 
 func generate(length:int, height:int, width:int, block_id:int, threshold:float, new_seed:int, fill:bool = false, fill_block_id:int = -1) -> void:
 	_terrain_noise.seed = new_seed;

@@ -5,4 +5,5 @@
 [node name="Terrain" type="GridMap"]
 cell_size = Vector3(1, 1, 1)
 cell_center_y = false
+bake_navigation = true
 script = ExtResource("1_d8agx")

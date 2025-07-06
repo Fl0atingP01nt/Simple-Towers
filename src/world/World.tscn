@@ -1,0 +1,26 @@
+[gd_scene load_steps=5 format=3 uid="uid://ujcy7xssye0r"]
+
+[ext_resource type="Script" uid="uid://bp6x1jav8fmye" path="res://src/world/World.gd" id="1_uxida"]
+[ext_resource type="PackedScene" uid="uid://cf7brgwaxlmud" path="res://addons/3d_rts_camera/rtscam.tscn" id="2_ok0ol"]
+[ext_resource type="PackedScene" uid="uid://3t7yq30mwnv2" path="res://src/terrain/TerrainGen.tscn" id="3_rgxpb"]
+[ext_resource type="MeshLibrary" uid="uid://f2tox1nwn2fx" path="res://assets/terrain/terrain.tres" id="4_232g1"]
+
+[node name="World" type="Node3D"]
+script = ExtResource("1_uxida")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 0, 0)
+shadow_enabled = true
+
+[node name="RTScamera" parent="." instance=ExtResource("2_ok0ol")]
+transform = Transform3D(1, 0, 0, 0, 0.642788, 0.766045, 0, -0.766045, 0.642788, 0, 6.73361, 11.4129)
+
+[node name="Generation" parent="." instance=ExtResource("3_rgxpb")]
+mesh_library = ExtResource("4_232g1")
+x_radius = 32
+z_radius = 32
+freqency = 0.2
+threshold = 0.3
+fill = true
+fill_block_id = 1
+path = true

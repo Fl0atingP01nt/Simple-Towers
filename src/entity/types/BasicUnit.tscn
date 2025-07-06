@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://du0ajleg3qk6e"]
+
+[ext_resource type="Script" uid="uid://5aikx8wbe1xp" path="res://src/entity/Entity.gd" id="1_inyej"]
+[ext_resource type="PackedScene" uid="uid://bed21pb40bgub" path="res://assets/debug/debug.glb" id="2_gdgtr"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_5048n"]
+
+[node name="Basic Unit" type="CharacterBody3D"]
+script = ExtResource("1_inyej")
+metadata/_custom_type_script = "uid://5aikx8wbe1xp"
+
+[node name="model" parent="." instance=ExtResource("2_gdgtr")]
+
+[node name="shape" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+shape = SubResource("BoxShape3D_5048n")
+
+[node name="navigator" type="NavigationAgent3D" parent="."]
+simplify_path = true
+debug_enabled = true
