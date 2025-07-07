@@ -1,12 +1,14 @@
-[gd_scene load_steps=5 format=3 uid="uid://ujcy7xssye0r"]
+[gd_scene load_steps=6 format=3 uid="uid://ujcy7xssye0r"]
 
 [ext_resource type="Script" uid="uid://bp6x1jav8fmye" path="res://src/world/World.gd" id="1_uxida"]
 [ext_resource type="PackedScene" uid="uid://cf7brgwaxlmud" path="res://addons/3d_rts_camera/rtscam.tscn" id="2_ok0ol"]
 [ext_resource type="PackedScene" uid="uid://3t7yq30mwnv2" path="res://src/terrain/TerrainGen.tscn" id="3_rgxpb"]
 [ext_resource type="MeshLibrary" uid="uid://f2tox1nwn2fx" path="res://assets/terrain/terrain.tres" id="4_232g1"]
+[ext_resource type="PackedScene" uid="uid://du0ajleg3qk6e" path="res://src/entity/types/BasicUnit.tscn" id="5_ok0ol"]
 
 [node name="World" type="Node3D"]
 script = ExtResource("1_uxida")
+enemies = Array[PackedScene]([ExtResource("5_ok0ol")])
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 0, 0)
@@ -21,6 +23,7 @@ x_radius = 32
 z_radius = 32
 freqency = 0.2
 threshold = 0.3
+block_id = 3
 fill = true
-fill_block_id = 1
+fill_block_id = 4
 path = true

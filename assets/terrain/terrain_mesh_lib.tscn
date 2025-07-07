@@ -8,17 +8,17 @@
 
 [node name="Node3D" type="Node3D"]
 
-[node name="blockbench_export" parent="." instance=ExtResource("1_nb5xw")]
+[node name="path" parent="." instance=ExtResource("1_nb5xw")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, 0.5)
 
-[node name="blockbench_export2" parent="." instance=ExtResource("2_nwhdu")]
+[node name="start" parent="." instance=ExtResource("2_nwhdu")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, 1.5)
 
-[node name="blockbench_export3" parent="." instance=ExtResource("3_gxwhv")]
+[node name="end" parent="." instance=ExtResource("3_gxwhv")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, 2.5)
 
-[node name="blockbench_export4" parent="." instance=ExtResource("4_x3ifm")]
+[node name="grass" parent="." instance=ExtResource("4_x3ifm")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0, 0.5)
 
-[node name="blockbench_export5" parent="." instance=ExtResource("5_m000t")]
+[node name="stone" parent="." instance=ExtResource("5_m000t")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0, 1.5)

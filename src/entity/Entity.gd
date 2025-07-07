@@ -1,10 +1,10 @@
 extends CharacterBody3D;
 class_name Entity;
 
-@export var has_gravity:bool;
-@export var can_think:bool;
+@export var has_gravity:bool = true;
+@export var can_think:bool = true;
 
-@export var speed:float = 10; #in meters per sec
+@export var speed:float = 5; #in meters per sec
 @export var health:int = 100;
 
 @export var terrain:TerrainGen;
@@ -24,12 +24,23 @@ func navigate() -> void:
 	nav.target_position = endpoint;
 	
 	var next_loc := nav.get_next_path_position();
-	velocity = next_loc * speed;
+	var next_loc_local := next_loc - global_position;
+	
+	var dir := next_loc_local.normalized();
+	velocity = dir * speed;
 	move_and_slide();
 
-func _process_gravity() -> void:
-	velocity = get_gravity();
+func _process_gravity(delta:float) -> void:
+	velocity += get_gravity() * delta;
+
+func _ready() -> void:
+	position = terrain.get_path_start();
 
 func _physics_process(delta: float) -> void:
-	if has_gravity: _process_gravity();
-	if can_think: navigate();
+	if has_gravity: _process_gravity(delta);
+	if can_think and is_on_floor(): navigate();
+	move_and_slide();
+
+
+func _on_navigator_target_reached() -> void:
+	queue_free();

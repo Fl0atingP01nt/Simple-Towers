@@ -33,11 +33,11 @@ var _start_location:Vector3i;
 var _end_location:Vector3i;
 
 enum TerrainBlockType{ 
-	STONE,
-	GRASS,
 	PATH,
 	SPAWN,
-	END
+	END,
+	GRASS,
+	STONE
 }; #TIL about enums 7-5-25
 
 func clear_blocks(length:int, height:int, width:int) -> void:
@@ -53,7 +53,7 @@ func fill_blocks(length:int, height:int, width:int, block_id:int) -> void: #I ho
 				set_cell_item(Vector3i(x, y, z), block_id);
 
 func get_path_end() -> Vector3:
-	var pos = map_to_local(_end_location)
+	var pos = map_to_local(_end_location);
 	return pos;
 
 func get_path_start() -> Vector3:
@@ -74,7 +74,9 @@ func _generate_path(point:Vector3i, path:TerrainBlockType, start:TerrainBlockTyp
 	var r_padding:int = path_width/2;
 	
 	set_cell_item(point, start);
-	_start_location = point;
+	point.y += 1;
+	_start_location = point; #funny hack
+	point.y -= 1;
 	while cur_len <= max_len:
 		var h_len:int = randi_range(2, 3);
 		cur_dir = dir.pick_random();
@@ -100,7 +102,9 @@ func _generate_path(point:Vector3i, path:TerrainBlockType, start:TerrainBlockTyp
 					break;
 		prev_dir = cur_dir
 	set_cell_item(point, end);
-	_end_location = point;
+	point.y += 1;
+	_end_location = point; #funny hack
+	point.y -= 1;
 
 func generate(length:int, height:int, width:int, block_id:int, threshold:float, new_seed:int, fill:bool = false, fill_block_id:int = -1) -> void:
 	_terrain_noise.seed = new_seed;
